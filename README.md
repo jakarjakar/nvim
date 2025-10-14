@@ -11,5 +11,5 @@ Added <Leader>h to :noh after search.
 It turns off pattern highlight
 
 TODO:
-fix python conde complition. 
+Setup python code complition. 
 
