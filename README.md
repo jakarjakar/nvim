@@ -12,4 +12,5 @@ It turns off pattern highlight
 
 TODO:
 Setup python code complition. 
+ - by addint nvim-treesitter first
 
