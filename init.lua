@@ -1,4 +1,5 @@
 -- Basic settings
+--
 vim.opt.hlsearch = true
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -46,12 +47,12 @@ vim.opt.gdefault = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- LSP
 vim.lsp.inlay_hint.enable(true)
+
 require("config.lazy")
 require("plugins.autopairs")
--- require("oil").setup()
 require("oil")
+require("oil").setup( {} )
 -- NvimTree
 require("nvim-tree").setup({
   sort = {
@@ -68,7 +69,6 @@ require("nvim-tree").setup({
   },
 })
 require("lazygit")
-require("lazy").setup({
-  {"nvim-treesitter/nvim-treesitter", branch = 'master', lazy = false, build = ":TSUpdate"}
-})
-require('mappings')
+require("mappings")
+require("nvim-treesitter")
+

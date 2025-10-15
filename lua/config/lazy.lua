@@ -19,9 +19,6 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- Keymap
-vim.keymap.set("i", "jk", "<ESC>")
-
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
@@ -33,8 +30,23 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
+
 })
 
--- Setup oil.nvim 
-require("oil").setup( {} )
-
+--
+-- Keymap
+--
+-- Modes
+--   normal_mode = "n",
+--   insert_mode = "i",
+--   visual_mode = "v",
+--   visual_block_mode = "x",
+--   term_mode = "t",
+--   command_mode = "c",
+--
+vim.keymap.set("i", "jk", "<ESC>")
+vim.keymap.set("n", "<Leader>w", "<Cmd>w<CR>")
+vim.keymap.set("n", "<Leader>q", "<Cmd>q<CR>")
+vim.keymap.set("n", "<Leader>qq", "<Cmd>q!<CR>")
+-- remove highlight after search
+vim.keymap.set("n", "<Leader>h", "<cmd>noh<CR>")
