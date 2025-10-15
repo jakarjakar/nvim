@@ -48,6 +48,11 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.lsp.inlay_hint.enable(true)
+vim.lsp.config("basedpyright", {
+  cmd = { "basedpyright-langserver", "--stdio" },
+  filetypes = { "python" },
+})
+vim.lsp.enable("basedpyright")
 
 require("config.lazy")
 require("plugins.autopairs")
