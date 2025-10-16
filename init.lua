@@ -50,6 +50,7 @@ vim.opt.splitbelow = true
 vim.lsp.inlay_hint.enable(true)
 
 require("config.lazy")
+require("config.lsp_config")
 require("plugins.autopairs")
 require("oil")
 require("oil").setup( {} )
