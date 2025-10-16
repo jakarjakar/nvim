@@ -1,16 +1,4 @@
-Defaults, wothout additional plugin. Should works with 'naked vim'.
+Following the blog about nvim 0.11 setup.
+https://blog.zhenbo.pro/lsp-on-neovim-0-11-from-stratch/
 
-Windows create/split:
-Ctrl-W n - creates New window
-Crtl-W v - creates Vertical split new vindow
-
-Windows navigation:
-CtrlW h/j/k/l - vim-motion jump between windows
-
-Added <Leader>h to :noh after search. 
-It turns off pattern highlight
-
-TODO:
-Setup python code complition. 
- - by addint nvim-treesitter first
-
+Step 0
