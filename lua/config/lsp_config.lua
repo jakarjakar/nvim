@@ -1,12 +1,10 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "basedpyright" },
+	ensure_installed = { "basedpyright", "ruff" },
 })
 vim.lsp.enable({
-    "basedpyright"
+	"basedpyright",
 })
 vim.diagnostic.config({
-  virtual_text = true,
+	virtual_text = true,
 })
-
-

@@ -20,7 +20,7 @@ vim.o.background = "dark" -- set to "dark" for dark theme
 
 -- Scrolling and UI settings
 vim.opt.cursorline = true
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 vim.opt.wrap = false
 vim.opt.sidescrolloff = 8
 vim.opt.scrolloff = 8
@@ -47,29 +47,38 @@ vim.opt.gdefault = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.lsp.inlay_hint.enable(true)
+-- vim.lsp.inlay_hint.enable(true)
+vim.lsp.inlay_hint.enable(false)
 
 require("config.lazy")
 require("config.lsp_config")
 require("plugins.autopairs")
 require("oil")
-require("oil").setup( {} )
+require("oil").setup({})
 -- NvimTree
 require("nvim-tree").setup({
-  sort = {
-    sorter = "case_sensitive",
-  },
-  view = {
-    width = 30,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
+	sort = {
+		sorter = "case_sensitive",
+	},
+	view = {
+		width = 30,
+	},
+	renderer = {
+		group_empty = true,
+	},
+	filters = {
+		dotfiles = true,
+	},
 })
 require("lazygit")
 require("mappings")
 require("nvim-treesitter")
-
+require("conform").setup({
+	formatters_by_ft = {
+		lua = { "stylua" },
+		python = { "ruff_format", "ruff_fix" },
+	},
+	format_on_save = function(bufnr)
+		return { lsp_fallback = true, timeout_ms = 2000 }
+	end,
+})
