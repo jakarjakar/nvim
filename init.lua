@@ -78,7 +78,7 @@ require("conform").setup({
 		lua = { "stylua" },
 		python = { "ruff_format", "ruff_fix" },
 	},
-	format_on_save = function(bufnr)
-		return { lsp_fallback = true, timeout_ms = 2000 }
-	end,
+	-- format_on_save = function(bufnr)
+	-- 	return { lsp_fallback = true, timeout_ms = 2000 }
+	-- end,
 })
