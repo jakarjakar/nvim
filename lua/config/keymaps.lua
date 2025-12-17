@@ -7,11 +7,11 @@ map("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer" })
 map("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 map("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
--- Better up/down
-map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
-map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+-- -- Better up/down
+-- map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+-- map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+-- map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+-- map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
 -- Go to different windows
 map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
@@ -82,6 +82,9 @@ map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 -- better indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")
+
+--better ESC                            
+map("i", "jk", "<ESC>")
 
 -- commenting
 map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })

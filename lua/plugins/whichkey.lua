@@ -4,7 +4,7 @@ vim.pack.add({
 
 local wk = require("which-key")
 wk.setup({
-	preset = "helix",
+	preset = "classic",
 })
 wk.add({
 	{ "<leader><tab>", group = "tabs" },
