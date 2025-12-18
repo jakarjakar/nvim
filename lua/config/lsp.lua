@@ -11,7 +11,8 @@ local default_keymaps = {
 	{ keys = "gd", func = vim.lsp.buf.definition, desc = "Goto Definition", has = "definitionProvider" },
 }
 
-local completion = vim.g.completion_mode or "blink" -- or 'native'
+-- I use blink.cmp for completion, but you can use native completion too
+local completion = vim.g.completion_mode or "blink" -- or 'native' for built-in completion
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = augroup("lsp_attach"),
 	callback = function(args)
@@ -49,26 +50,33 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-local ts_server = vim.g.lsp_typescript_server or "vtsls"
-
--- Enable LSP servers for Neovim 0.11+
 vim.lsp.enable({
-	ts_server,
-	"eslint",
-	"lua_ls",
-	"gopls",
-	"rust_analyser",
-	"zls",
-	"cssls",
-	"html",
-	"helm_ls",
-	"jsonls",
-	"biome",
-	-- "yamlls",
+	"pyright",
+	"stylua",
 })
+-- local ts_server = vim.g.lsp_typescript_server or "vtsls"
+--
+-- -- Enable LSP servers for Neovim 0.11+
+-- vim.lsp.enable({
+-- 	ts_server,
+-- 	"eslint",
+-- 	"lua_ls",
+-- 	"gopls",
+-- 	"rust_analyzer",
+-- 	"zls",
+-- 	"cssls",
+-- 	"html",
+-- 	"helm_ls",
+-- 	"biome",
+-- 	"yamlls",
+-- 	"jsonls",
+-- 	"tailwindcss",
+--   --- ... etc
+-- })
 
 -- Load Lsp on-demand, e.g: eslint is disable by default
 -- e.g: We could enable eslint by set vim.g.lsp_on_demands = {"eslint"}
 if vim.g.lsp_on_demands then
 	vim.lsp.enable(vim.g.lsp_on_demands)
 end
+
