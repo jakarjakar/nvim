@@ -1,5 +1,3 @@
-require("config.keymaps")
-require("config.lsp")
 
 
 -- https://tduyng.com/blog/neovim-basic-setup/
