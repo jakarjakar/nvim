@@ -1,6 +1,11 @@
+-- vim.pack.add({
+-- 	"https://github.com/folke/snacks.nvim",
+-- 	"https://github.com/nvim-tree/nvim-web-devicons",
+-- })
 vim.pack.add({
 	"https://github.com/folke/snacks.nvim",
 	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/coder/claudecode.nvim",
 })
 
 local Snacks = require("snacks")
@@ -122,6 +127,10 @@ Snacks.setup({
 	},
 })
 
+pcall(function()
+	require("claudecode").setup({})
+end)
+
 vim.api.nvim_create_autocmd("User", {
 	pattern = "VeryLazy",
 	callback = function()
@@ -151,6 +160,16 @@ vim.api.nvim_create_autocmd("User", {
 
 -- stylua: ignore start
 local   keymaps = {
+    -- Claude Code (AI)
+    { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+    { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+    { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+    { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+    { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+    { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+    { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+    { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+    { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
     -- Top Pickers & Explorer
     { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
     { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
@@ -266,6 +285,7 @@ local   keymaps = {
       end,
     }
 }
+
 -- stylua: ignore end
 for _, map in ipairs(keymaps) do
 	local opts = { desc = map.desc }
