@@ -35,7 +35,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				})
 			end
 
-			for _, km in ipairs(default_keymaps) do
+			-- Format on save (ruff for Python, fallback to LSP for others)
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			buffer = args.buf,
+			callback = function()
+				vim.lsp.buf.format({ name = "ruff", async = false })
+			end,
+		})
+
+		for _, km in ipairs(default_keymaps) do
 				-- Only bind if there's no `has` requirement, or the server supports it
 				if not km.has or client.server_capabilities[km.has] then
 					vim.keymap.set(
@@ -52,6 +60,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.lsp.enable({
 	"pyright",
+	"ruff",
 	"stylua",
 })
 
