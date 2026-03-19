@@ -2,6 +2,7 @@ local opt = vim.opt
 -- On the top
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.g.completion_mode = "native"
 
 require("config.keymaps")
 require("config.lsp")

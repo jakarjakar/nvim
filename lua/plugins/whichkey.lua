@@ -11,6 +11,7 @@ wk.add({
 	{ "<leader>c", group = "code" },
 	{ "<leader>d", group = "debug" },
 	{ "<leader>D", group = "Diffview", icon = { icon = "", color = "orange" } },
+	{ "<leader>cv", "<cmd>CsvViewToggle<cr>", desc = "Toggle CSV View" },
 	{ "<leader>p", group = "Yanky", icon = { icon = "󰃮 ", color = "yellow" } },
 	{ "<leader>dp", group = "profiler" },
 	{ "<leader>f", group = "file/find" },
