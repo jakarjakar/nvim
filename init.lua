@@ -139,6 +139,8 @@ vim.filetype.add({
   filename = {
     [".env"] = "dotenv",
     ["env"] = "dotenv",
+    [".gitlab-ci.yml"] = "yaml.gitlab",
+    [".gitlab-ci.yaml"] = "yaml.gitlab",
   },
   pattern = {
     ["[jt]sconfig.*.json"] = "jsonc",

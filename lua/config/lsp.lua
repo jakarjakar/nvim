@@ -1,4 +1,4 @@
--- LSP
+-- LSP
 local function augroup(name)
 	return vim.api.nvim_create_augroup("user_" .. name, { clear = true })
 end
@@ -62,6 +62,8 @@ vim.lsp.enable({
 	"pyright",
 	"ruff",
 	"stylua",
+	"yamlls",
+	"gitlab_ci_ls",
 })
 
 -- Load Lsp on-demand, e.g: eslint is disable by default
