@@ -1,3 +1,6 @@
+-- Disable matchit before it auto-loads (it overrides our custom % keymap)
+vim.g.loaded_matchit = 1
+
 local opt = vim.opt
 -- On the top
 vim.g.mapleader = " "

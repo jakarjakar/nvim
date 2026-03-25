@@ -92,24 +92,26 @@ map({ "n", "x", "o" }, "%", function()
   local line = vim.api.nvim_get_current_line()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- row: 1-indexed, col: 0-indexed
   local char = line:sub(col + 1, col + 1)
+  local pair_forward = { ["("] = ")", ["{"] = "}", ["["] = "]" }
+  local pair_backward = { [")"] = "(", ["}"] = "{", ["]"] = "[" }
   if char == '"' or char == "'" or char == "`" then
     -- Count same-char occurrences before cursor to determine open vs close
     local count = 0
-    local prev = nil
     for i = 1, col do
-      if line:sub(i, i) == char then
-        count = count + 1
-        prev = i
-      end
+      if line:sub(i, i) == char then count = count + 1 end
     end
+    local stopline = vim.fn.line(".")
     if count % 2 == 0 then
-      -- Opening quote: jump to next occurrence after cursor
-      local pos = line:find(char, col + 2, true)
-      if pos then vim.api.nvim_win_set_cursor(0, { row, pos - 1 }) end
+      -- Opening quote: jump forward to closing quote
+      vim.fn.search(char, "W", stopline)
     else
-      -- Closing quote: jump back to the opening quote
-      if prev then vim.api.nvim_win_set_cursor(0, { row, prev - 1 }) end
+      -- Closing quote: jump backward to opening quote
+      vim.fn.search(char, "bW", stopline)
     end
+  elseif pair_forward[char] then
+    vim.fn.searchpair(vim.fn.escape(char, "[]"), "", vim.fn.escape(pair_forward[char], "[]"), "W")
+  elseif pair_backward[char] then
+    vim.fn.searchpair(vim.fn.escape(pair_backward[char], "[]"), "", vim.fn.escape(char, "[]"), "bW")
   else
     vim.cmd("normal! %")
   end
