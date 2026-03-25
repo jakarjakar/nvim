@@ -72,7 +72,9 @@ opt.iskeyword:append("-") -- Treat dash as part of word
 opt.path:append("**") -- include subdirectories in search
 opt.selection = "exclusive" -- Selection behavior
 opt.mouse = "a" -- Enable mouse support
-opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
+vim.schedule(function()
+  vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
+end)
 opt.modifiable = true -- Allow buffer modifications
 opt.encoding = "UTF-8" -- Set encoding
 

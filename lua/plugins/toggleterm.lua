@@ -2,6 +2,16 @@ vim.pack.add({
 	"https://github.com/akinsho/toggleterm.nvim",
 })
 
+-- Paste system clipboard into terminal with Cmd+V
+vim.keymap.set("t", "<D-v>", function()
+  -- Try yank register first (last explicit yank in Neovim), fall back to system clipboard
+  local text = vim.fn.getreg("0")
+  if text == "" then
+    text = vim.fn.getreg("+")
+  end
+  vim.api.nvim_feedkeys(text, "t", false)
+end, { desc = "Paste clipboard in terminal" })
+
 require("toggleterm").setup{
 	size = 20,
 	open_mapping = [[<c-\>]],

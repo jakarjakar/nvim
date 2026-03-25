@@ -87,6 +87,34 @@ map("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts)
 -- SEARCH & NAVIGATION (ergonomic improvements)
 -- ═══════════════════════════════════════════════════════════
 
+-- Extend % to jump between matching quotes (" ' `) in addition to brackets
+map({ "n", "x", "o" }, "%", function()
+  local line = vim.api.nvim_get_current_line()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- row: 1-indexed, col: 0-indexed
+  local char = line:sub(col + 1, col + 1)
+  if char == '"' or char == "'" or char == "`" then
+    -- Count same-char occurrences before cursor to determine open vs close
+    local count = 0
+    local prev = nil
+    for i = 1, col do
+      if line:sub(i, i) == char then
+        count = count + 1
+        prev = i
+      end
+    end
+    if count % 2 == 0 then
+      -- Opening quote: jump to next occurrence after cursor
+      local pos = line:find(char, col + 2, true)
+      if pos then vim.api.nvim_win_set_cursor(0, { row, pos - 1 }) end
+    else
+      -- Closing quote: jump back to the opening quote
+      if prev then vim.api.nvim_win_set_cursor(0, { row, prev - 1 }) end
+    end
+  else
+    vim.cmd("normal! %")
+  end
+end, { desc = "Jump to matching bracket/quote" })
+
 -- Better line start/end (more comfortable than $ and ^)
 map("n", "gl", "$", { desc = "Go to end of line" })
 map("n", "gh", "^", { desc = "Go to start of line" })
