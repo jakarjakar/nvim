@@ -207,12 +207,137 @@ end, { desc = "Quickfix List" })
 map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
+-- Restart LSP for the current buffer
+map("n", "<leader>lr", function()
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+    client:stop(true)
+  end
+  vim.cmd("edit")
+end, { desc = "Restart LSP" })
+
+-- Show LSP info: attached servers and their root_dir
+map("n", "<leader>li", function()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    vim.notify("No LSP clients attached", vim.log.levels.WARN)
+    return
+  end
+  local lines = {}
+  for _, c in ipairs(clients) do
+    table.insert(lines, string.format("[%s]  root: %s", c.name, c.root_dir or "nil"))
+  end
+  vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO)
+end, { desc = "LSP info (name + root_dir)" })
+
 -- Inspection tools (useful for debugging highlights and treesitter)
 map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree" })
 
 -- Keyword program (K for help on word under cursor)
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
+
+-- ═══════════════════════════════════════════════════════════
+-- PYTEST FIXTURE NAVIGATION
+-- gd → LSP first; if LSP returns nothing → grep for "def {word}"
+-- Handles pytest fixture parameters that Pyright can't resolve.
+-- ═══════════════════════════════════════════════════════════
+local function goto_fixture_or_def(word)
+  local cwd = vim.fn.getcwd()
+  local raw = vim.fn.systemlist(
+    "rg --color=never --no-heading -n --fixed-strings -g '*.py' "
+      .. vim.fn.shellescape("def " .. word)
+      .. " "
+      .. vim.fn.shellescape(cwd)
+  )
+
+  -- Drop empty lines (trailing newline artefacts)
+  local hits = {}
+  for _, h in ipairs(raw) do
+    if h ~= "" then table.insert(hits, h) end
+  end
+
+
+  -- Parse "abs/path/file.py:linenum:content" — greedy .+ backtracks past colons in path
+  local function parse(h)
+    local file, lnum = h:match("^(.+):(%d+):")
+    return file, lnum and tonumber(lnum)
+  end
+
+  if #hits == 0 then
+    vim.notify("No definition found for: " .. word, vim.log.levels.WARN)
+  elseif #hits == 1 then
+    local file, lnum = parse(hits[1])
+    if file and lnum then
+      vim.cmd("edit " .. vim.fn.fnameescape(file))
+      vim.api.nvim_win_set_cursor(0, { lnum, 0 })
+      vim.cmd("normal! zz")
+    else
+      vim.notify("Could not parse rg output: " .. hits[1], vim.log.levels.WARN)
+    end
+  else
+    local qf = {}
+    for _, h in ipairs(hits) do
+      local file, lnum = parse(h)
+      if file and lnum then
+        local text = h:match("^.+:%d+:(.*)")
+        table.insert(qf, { filename = file, lnum = lnum, text = text or "" })
+      end
+    end
+    if #qf > 0 then
+      vim.fn.setqflist(qf)
+      vim.cmd("copen")
+    else
+      vim.notify("Could not parse rg output for: " .. word, vim.log.levels.WARN)
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    if vim.bo[bufnr].filetype ~= "python" then return end
+
+    -- defer_fn runs after all synchronous LspAttach handlers (lsp.lua, snacks)
+    -- so our buffer-local gd is set last and wins.
+    vim.defer_fn(function()
+      vim.keymap.set("n", "gd", function()
+        local word = vim.fn.expand("<cword>")
+        local clients = vim.lsp.get_clients({ bufnr = bufnr })
+
+        if #clients == 0 then
+          goto_fixture_or_def(word)
+          return
+        end
+
+        local client = clients[1]
+        local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+
+        client:request("textDocument/definition", params, function(err, result)
+          if not err and result and #result > 0 then
+            local loc = result[1]
+            local uri = loc.targetUri or loc.uri
+            local def_fname = vim.uri_to_fname(uri)
+            local cur_fname = vim.api.nvim_buf_get_name(bufnr)
+
+            -- LSP resolved to the same file → it's pointing at the parameter's own
+            -- declaration (self-referential). Fall back to fixture search.
+            if def_fname == cur_fname then
+              goto_fixture_or_def(word)
+              return
+            end
+
+            local range = loc.targetRange or loc.range
+            vim.cmd("edit " .. vim.fn.fnameescape(def_fname))
+            vim.api.nvim_win_set_cursor(0, { range.start.line + 1, range.start.character })
+            vim.cmd("normal! zz")
+          else
+            goto_fixture_or_def(word)
+          end
+        end, bufnr)
+      end, { buffer = bufnr, desc = "Go to definition (LSP + pytest fixture fallback)" })
+    end, 0)
+  end,
+})
 
 -- ═══════════════════════════════════════════════════════════
 -- TERMINAL INTEGRATION
