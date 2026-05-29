@@ -88,6 +88,10 @@
       "rev": "8dcb311b0c92d460fac00eac706abd43d94d68af",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
+    "preview.nvim": {
+      "rev": "b98568f4010239b86504cfb4b8081320a44dd05f",
+      "src": "https://git.barrettruth.com/barrettruth/preview.nvim"
+    },
     "render-markdown.nvim": {
       "rev": "26097a4eb95b391d0308c1b77cce89b28bbc9916",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"

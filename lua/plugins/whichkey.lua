@@ -20,6 +20,20 @@ wk.add({
 	{ "<leader>q", group = "quit/session" },
 	{ "<leader>s", group = "search" },
 	{ "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
+	{
+		"<leader>up",
+		function()
+			local ft = vim.bo.filetype
+			if ft == "markdown" then
+				vim.cmd("MarkdownPreview")
+			elseif ft == "html" then
+				vim.cmd("Preview")
+			else
+				vim.notify("No preview for filetype: " .. ft, vim.log.levels.WARN)
+			end
+		end,
+		desc = "Preview file",
+	},
 	{ "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
 	{ "[", group = "prev" },
 	{ "]", group = "next" },
