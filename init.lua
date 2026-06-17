@@ -9,6 +9,7 @@ vim.g.completion_mode = "native"
 
 require("config.keymaps")
 require("config.lsp")
+require("config.winbar")
 
 require("plugins")
 

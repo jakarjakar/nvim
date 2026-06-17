@@ -8,6 +8,10 @@
       "rev": "aa9a5cebebdbfa449c1c5ff229ba5d98e66bafed",
       "src": "https://github.com/coder/claudecode.nvim"
     },
+    "commentless.nvim": {
+      "rev": "67263e1973276fb6f8f089b815d0f69fc50673b1",
+      "src": "https://github.com/soemre/commentless.nvim"
+    },
     "conform.nvim": {
       "rev": "ffe26e8df8115c9665d24231f8a49fadb2d611ce",
       "src": "https://github.com/stevearc/conform.nvim"
