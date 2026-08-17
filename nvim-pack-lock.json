@@ -28,6 +28,10 @@
       "rev": "fcea7ff883235d9024dc41e638f164a450c14ca2",
       "src": "https://github.com/folke/flash.nvim"
     },
+    "flashcards.nvim": {
+      "rev": "5b99cd63415625f04056602a14176755028520ff",
+      "src": "https://github.com/alex-laycalvert/flashcards.nvim"
+    },
     "gitsigns.nvim": {
       "rev": "5813e4878748805f1518cee7abb50fd7205a3a48",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
