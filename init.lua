@@ -9,9 +9,10 @@ vim.g.completion_mode = "native"
 
 require("config.keymaps")
 require("config.lsp")
-require("config.winbar")
 
 require("plugins")
+
+require("config.statusline")
 
 
 opt.number = true -- Line numbers
@@ -40,7 +41,7 @@ opt.termguicolors = true -- Enable 24-bit colors
 opt.signcolumn = "yes" -- Always show sign column
 opt.showmatch = true -- Highlight matching brackets
 opt.matchtime = 2 -- How long to show matching bracket
-opt.cmdheight = 1 -- Command line height
+opt.cmdheight = 0 -- Hide command line when idle (saves a row)
 opt.showmode = false -- Don't show mode in command line
 opt.pumheight = 10 -- Popup menu height
 opt.pumblend = 10 -- Popup menu transparency
@@ -117,7 +118,7 @@ vim.g.autoformat = true
 vim.g.trouble_lualine = true
 
 opt.jumpoptions = "view"
-opt.laststatus = 3 -- global statusline
+opt.laststatus = 3 -- global statusline (see lua/config/statusline.lua)
 opt.list = false -- Complete FIx for Transparancy
 opt.fillchars = {
   diff = "╱",
