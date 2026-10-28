@@ -4,6 +4,10 @@
       "rev": "b19413d214068f316c78978b08264ed1c41830ec",
       "src": "https://github.com/saghen/blink.cmp"
     },
+    "blink.download": {
+      "rev": "c8fdc12c8a2fab6cf786dd7141a283f8079f902b",
+      "src": "https://github.com/saghen/blink.download"
+    },
     "claudecode.nvim": {
       "rev": "aa9a5cebebdbfa449c1c5ff229ba5d98e66bafed",
       "src": "https://github.com/coder/claudecode.nvim"
@@ -39,6 +43,11 @@
     "grug-far.nvim": {
       "rev": "b58b2d65863f4ebad88b10a1ddd519e5380466e0",
       "src": "https://github.com/MagicDuck/grug-far.nvim"
+    },
+    "kubectl.nvim": {
+      "rev": "dfd25c503f6ee4a769f53a0a8aab8e8fde0ff180",
+      "src": "https://github.com/Ramilito/kubectl.nvim",
+      "version": "2.0.0 - 3.0.0"
     },
     "lazygit.nvim": {
       "rev": "2305deed25bc61b866d5d39189e9105a45cf1cfb",

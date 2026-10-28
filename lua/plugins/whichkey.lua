@@ -34,6 +34,8 @@ wk.add({
 		end,
 		desc = "Preview file",
 	},
+	{ "<leader>8", desc = "Kubernetes cluster view", icon = { icon = "󱃾 ", color = "blue" } },
+	{ "<leader>9", desc = "k9s cluster browser", icon = { icon = "󱃾 ", color = "cyan" } },
 	{ "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
 	{ "[", group = "prev" },
 	{ "]", group = "next" },

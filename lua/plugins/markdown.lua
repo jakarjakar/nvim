@@ -9,3 +9,6 @@ vim.cmd("packadd markdown-preview.nvim")
 
 -- Optional: disable auto-start
 vim.g.mkdp_auto_start = 0
+
+-- Open the preview in Firefox instead of the system default browser
+vim.g.mkdp_browser = "Firefox"

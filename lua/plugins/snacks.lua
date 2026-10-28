@@ -12,7 +12,7 @@ local Snacks = require("snacks")
 
 Snacks.setup({
 	animate = { enabled = false },
-	bigfile = { enabled = true },
+	bigfile = { enabled = true, size = 10 * 1024 * 1024, line_length = 100000 },
 	dashboard = { enabled = false },
 	dim = { enabled = true },
 	explorer = { enabled = true, replace_netrw = true },

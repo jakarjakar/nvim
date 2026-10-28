@@ -25,6 +25,8 @@ lua/
     lazygit.lua           # lazygit.nvim
     tokyonight.lua        # colorscheme (transparent)
     csvview.lua           # csvview.nvim
+    kubectl.lua           # kubectl.nvim (k8s cluster browser, <leader>8)
+    k9s.lua               # k9s in a toggleterm float (<leader>9, :K9s)
 lsp/
   pyright.lua             # Python LSP (mason bin, root markers, settings)
   ruff.lua                # Ruff LSP (formatter/linter for Python)
